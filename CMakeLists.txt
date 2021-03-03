@@ -456,6 +456,7 @@ target_link_libraries(
           STM32::USBDevice
           CPU
           inih::inih
+          lwesp
           $<$<BOOL:${WUI}>:WUI>
           jsmn::jsmn
           QR
