@@ -34,6 +34,7 @@
 #ifndef LWESP_HDR_OPTS_H
 #define LWESP_HDR_OPTS_H
 
+#define LWESP_CFG_INPUT_USE_PROCESS 1
 /* Rename this file to "lwesp_opts.h" for your application */
 
 /*
