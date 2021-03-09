@@ -91,7 +91,7 @@ usart_ll_thread(void *arg) {
     while (1) {
         void *d;
         /* Wait for the event message from DMA or USART */
-        osMessageQueueGet(usart_ll_mbox_id, &d, NULL, osWaitForever);
+        // osMessageQueueGet(usart_ll_mbox_id, &d, NULL, osWaitForever);
 
         /* Read data */
     // #if defined(LWESP_USART_DMA_RX_STREAM)
@@ -157,15 +157,15 @@ configure_uart(uint32_t baudrate) {
     }
 
     /* Create mbox and start thread */
-    if (usart_ll_mbox_id == NULL) {
-        usart_ll_mbox_id = osMessageQueueNew(10, sizeof(void *), NULL);
-    }
-    if (usart_ll_thread_id == NULL) {
-        const osThreadAttr_t attr = {
-            .stack_size = 1024
-        };
-        usart_ll_thread_id = osThreadNew(usart_ll_thread, usart_ll_mbox_id, &attr);
-    }
+    // if (usart_ll_mbox_id == NULL) {
+        // usart_ll_mbox_id = osMessageQueueNew(10, sizeof(void *), NULL);
+    // }
+    // if (usart_ll_thread_id == NULL) {
+        // const osThreadAttr_t attr = {
+            // .stack_size = 1024
+        // };
+        // usart_ll_thread_id = osThreadNew(usart_ll_thread, usart_ll_mbox_id, &attr);
+    // }
 }
 
     #if defined(LWESP_RESET_PIN)
@@ -248,29 +248,29 @@ lwesp_ll_deinit(lwesp_ll_t *ll) {
  * \brief           UART global interrupt handler
  */
 void LWESP_USART_IRQHANDLER(void) {
-    LL_USART_ClearFlag_IDLE(LWESP_USART);
-    LL_USART_ClearFlag_PE(LWESP_USART);
-    LL_USART_ClearFlag_FE(LWESP_USART);
-    LL_USART_ClearFlag_ORE(LWESP_USART);
-    LL_USART_ClearFlag_NE(LWESP_USART);
-
-    if (usart_ll_mbox_id != NULL) {
-        void *d = (void *)1;
-        osMessageQueuePut(usart_ll_mbox_id, &d, 0, 0);
-    }
+    // LL_USART_ClearFlag_IDLE(LWESP_USART);
+    // LL_USART_ClearFlag_PE(LWESP_USART);
+    // LL_USART_ClearFlag_FE(LWESP_USART);
+    // LL_USART_ClearFlag_ORE(LWESP_USART);
+    // LL_USART_ClearFlag_NE(LWESP_USART);
+//
+    // if (usart_ll_mbox_id != NULL) {
+        // void *d = (void *)1;
+        // osMessageQueuePut(usart_ll_mbox_id, &d, 0, 0);
+    // }
 }
 
 /**
  * \brief           UART DMA stream/channel handler
  */
 void LWESP_USART_DMA_RX_IRQHANDLER(void) {
-    LWESP_USART_DMA_RX_CLEAR_TC;
-    LWESP_USART_DMA_RX_CLEAR_HT;
-
-    if (usart_ll_mbox_id != NULL) {
-        void *d = (void *)1;
-        osMessageQueuePut(usart_ll_mbox_id, &d, 0, 0);
-    }
+    // LWESP_USART_DMA_RX_CLEAR_TC;
+    // LWESP_USART_DMA_RX_CLEAR_HT;
+//
+    // if (usart_ll_mbox_id != NULL) {
+        // void *d = (void *)1;
+        // osMessageQueuePut(usart_ll_mbox_id, &d, 0, 0);
+    // }
 }
 
 #endif /* !__DOXYGEN__ */
