@@ -136,7 +136,7 @@ void app_run(void) {
         if (marlin_server_processing()) {
             loop();
         }
-        uartslave_cycle(&uart6slave);
+        // uartslave_cycle(&uart6slave);
         marlin_server_loop();
         osDelay(0); // switch to other threads - without this is UI slow
 #ifdef JOGWHEEL_TRACE

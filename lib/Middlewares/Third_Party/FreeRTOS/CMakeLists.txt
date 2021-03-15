@@ -5,6 +5,7 @@ endif()
 add_library(
   FreeRTOS
   Source/CMSIS_RTOS/cmsis_os.c
+  Source/CMSIS_RTOS_V2/cmsis_os2.c
   Source/croutine.c
   Source/event_groups.c
   Source/list.c
@@ -15,7 +16,7 @@ add_library(
   )
 
 target_include_directories(
-  FreeRTOS PUBLIC Source/include Source/CMSIS_RTOS Source/portable/GCC/ARM_CM4F
+  FreeRTOS PUBLIC Source/include Source/CMSIS_RTOS Source/CMSIS_RTOS_V2 Source/portable/GCC/ARM_CM4F
   )
 
 target_link_libraries(FreeRTOS PUBLIC CMSIS FreeRTOS_Config)

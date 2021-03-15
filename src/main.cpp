@@ -297,8 +297,8 @@ int main(void) {
     };
     metric_system_init(handlers);
 
-    if(lwesp_init(lwesp_cb_fn, 1) != lwespOK){
-    // _dbg0("LWESP NOT INICIALIZED");
+    if (lwesp_init(lwesp_cb_fn, 1) != lwespOK) {
+        _dbg0("LWESP NOT INICIALIZED");
     }
 
     /* USER CODE BEGIN RTOS_MUTEX */
