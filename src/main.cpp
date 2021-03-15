@@ -67,6 +67,7 @@
 #include "eeprom.h"
 #include "crc32.h"
 #include "w25x.h"
+#include "lwesp/lwesp.h"
 
 #define USB_OVERC_Pin       GPIO_PIN_4
 #define USB_OVERC_GPIO_Port GPIOE
@@ -168,6 +169,7 @@ static void MX_RTC_Init(void);
 void StartDefaultTask(void const *argument);
 void StartDisplayTask(void const *argument);
 void iwdg_warning_cb(void);
+static lwespr_t lwesp_cb_fn(lwesp_evt_t *evt);
 
 /* USER CODE BEGIN PFP */
 
@@ -269,8 +271,8 @@ int main(void) {
     uartrxbuff_init(&uart6rxbuff, &huart6, &hdma_usart6_rx, sizeof(uart6rx_data), uart6rx_data);
     HAL_UART_Receive_DMA(&huart6, uart6rxbuff.buffer, uart6rxbuff.buffer_size);
     uartrxbuff_reset(&uart6rxbuff);
-    uartslave_init(&uart6slave, &uart6rxbuff, &huart6, sizeof(uart6slave_line), uart6slave_line);
-    putslave_init(&uart6slave);
+    // uartslave_init(&uart6slave, &uart6rxbuff, &huart6, sizeof(uart6slave_line), uart6slave_line);
+    // putslave_init(&uart6slave);
     wdt_iwdg_warning_cb = iwdg_warning_cb;
 
     crc32_init();
@@ -294,6 +296,11 @@ int main(void) {
         NULL
     };
     metric_system_init(handlers);
+
+    if(lwesp_init(lwesp_cb_fn, 1) != lwespOK){
+    // _dbg0("LWESP NOT INICIALIZED");
+    }
+
     /* USER CODE BEGIN RTOS_MUTEX */
     /* add mutexes, ... */
     /* USER CODE END RTOS_MUTEX */
@@ -346,6 +353,11 @@ int main(void) {
         /* USER CODE BEGIN 3 */
     }
     /* USER CODE END 3 */
+}
+
+static lwespr_t lwesp_cb_fn(lwesp_evt_t *evt) {
+    // switch()
+    return lwespOK;
 }
 
 /**
@@ -905,7 +917,8 @@ static void MX_GPIO_Init(void) {
     HAL_GPIO_WritePin(USB_EN_GPIO_Port, USB_EN_Pin, GPIO_PIN_RESET);
 
     /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOC, ESP_RST_Pin, GPIO_PIN_RESET);
+    // HAL_GPIO_WritePin(GPIOC, ESP_RST_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOC, ESP_RST_Pin, GPIO_PIN_SET);
 
     /*Configure GPIO pin Output Level */
     HAL_GPIO_WritePin(GPIOD, FLASH_CSN_Pin, GPIO_PIN_RESET);
