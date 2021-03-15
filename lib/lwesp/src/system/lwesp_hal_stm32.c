@@ -48,7 +48,8 @@
 #include "lwesp/lwesp_input.h"
 #include "system/lwesp_ll.h"
 
-#include "stm32f4xx_hal.h"
+#include "main.h"
+// #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
 
 #if !__DOXYGEN__
@@ -72,8 +73,12 @@ static uint8_t usart_mem[LWESP_USART_DMA_RX_BUFF_SIZE];
 static uint8_t is_running, initialized;
 static size_t old_pos;
 
+typedef void* osThreadId_t;
+typedef void* osMessageQueueId_t;
+
 /* USART thread */
 static void usart_ll_thread(void *arg);
+// static osThreadId_t usart_ll_thread_id;
 static osThreadId_t usart_ll_thread_id;
 
 /* Message queue */
@@ -232,7 +237,8 @@ lwesp_ll_deinit(lwesp_ll_t *ll) {
     if (usart_ll_mbox_id != NULL) {
         osMessageQueueId_t tmp = usart_ll_mbox_id;
         usart_ll_mbox_id = NULL;
-        osMessageQueueDelete(tmp);
+        // osMessageQueueDelete(tmp);
+        osMessageDelete(tmp);
     }
     if (usart_ll_thread_id != NULL) {
         osThreadId_t tmp = usart_ll_thread_id;

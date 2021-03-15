@@ -29,10 +29,10 @@ target_sources(lwesp INTERFACE
 
   # src/system/lwesp_ll_stm32f429zi_nucleo.c
   # src/system/lwesp_ll_stm32.c
-  src/system/lwesp_hal_stm32f4xxxx.c
-  src/system/lwesp_hal_stm32.c
+  # src/system/lwesp_hal_stm32f4xxxx.c
   src/system/lwesp_mem_lwmem.c
   src/system/lwesp_sys_freertos_os.c
+  src/system/lwesp_hal_stm32.c
 )
 
 target_include_directories(

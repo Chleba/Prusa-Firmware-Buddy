@@ -50,13 +50,15 @@
 
 #if !__DOXYGEN__
 
+#include "main.h"
+
 // #include "stm32f4xx_ll_bus.h"
 // #include "stm32f4xx_ll_usart.h"
 // #include "stm32f4xx_ll_gpio.h"
 // #include "stm32f4xx_ll_dma.h"
 // #include "stm32f4xx_ll_rcc.h"
 
-#include "stm32f4xx_hal_conf.h"
+// #include "stm32f4xx_hal_conf.h"
 
 // #include "stm32f4xx_ll_bus.h"
 // #include "stm32f4xx_hal_usart.h"
